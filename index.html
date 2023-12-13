@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User and Order Information</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>User and Order Information</h1>
+
+<table id="userTable">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Orders</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table data will be inserted here dynamically -->
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch user data
+        fetch('http://localhost:5000/api/users/1')
+            .then(response => response.json())
+            .then(user => {
+                // Display user information in the table
+                const userTableBody = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+                const row = userTableBody.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+
+                cell1.textContent = user.user.id;
+                cell2.textContent = user.user.name;
+                cell3.textContent = user.orders.map(order => order.product).join(', ');
+            })
+            .catch(error => console.error('Error fetching user data:', error));
+    });
+</script>
+
+</body>
+</html>

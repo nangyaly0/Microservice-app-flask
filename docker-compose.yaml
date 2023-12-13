@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  api-gateway:
+    image: alikhan0/api-gateway
+    deploy:
+      replicas: 1
+    ports:
+      - "5000:5000"
+    depends_on:
+      - user-service
+      - order-service
+
+  user-service:
+    image: alikhan0/user-service
+    deploy:
+      replicas: 1
+    ports:
+      - "5001:5001"
+
+  order-service:
+    image: alikhan0/order-service
+    deploy:
+      replicas: 1
+    ports:
+      - "5002:5002"
+
